@@ -115,10 +115,10 @@ def ingest_batch(batch_num, params):
 
 
 def ingest_all(params):
-    """Ingest all batches sequentially into the bronze layer."""
-    n_batches = params["split"]["n_batches"]
+    """Ingest batches up to max_batch sequentially into the bronze layer."""
+    max_batch = params["ingest"].get("max_batch", params["split"]["n_batches"])
 
-    for batch_num in range(1, n_batches + 1):
+    for batch_num in range(1, max_batch + 1):
         ingest_batch(batch_num, params)
 
 

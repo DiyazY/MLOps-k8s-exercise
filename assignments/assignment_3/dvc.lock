@@ -33,13 +33,14 @@ stages:
       nfiles: 5
     - path: src/ingest.py
       hash: md5
-      md5: 40b8fe45b85f8dd828be05c7ef54935a
-      size: 4697
+      md5: 881185e6392ab42b927f1bbff617fff2
+      size: 4744
     params:
       params.yaml:
         ingest:
           batch_dir: data/batches
           output_file: data/bronze/bronze_data.csv
+          max_batch: 1
           drop_fraction: 0.05
           missing_fraction: 0.03
           duplicate_fraction: 0.02
@@ -47,15 +48,15 @@ stages:
     outs:
     - path: data/bronze/bronze_data.csv
       hash: md5
-      md5: 0b794d1b2e31b16a3b35eff540d2ac08
-      size: 131330
+      md5: 65908f404add6510afa8e6c3c9aee35b
+      size: 28871
   clean:
     cmd: python src/clean.py
     deps:
     - path: data/bronze/bronze_data.csv
       hash: md5
-      md5: 0b794d1b2e31b16a3b35eff540d2ac08
-      size: 131330
+      md5: 65908f404add6510afa8e6c3c9aee35b
+      size: 28871
     - path: src/clean.py
       hash: md5
       md5: 9cd0a80804cfdf5b1102711b033cca81
@@ -84,19 +85,19 @@ stages:
     outs:
     - path: data/silver/silver_data.csv
       hash: md5
-      md5: 192abb5898b5b1158cd771b532c723b0
-      size: 362604
+      md5: 42918c6f2d5ffe8f2f3de4871f4f7caa
+      size: 78867
   validate:
     cmd: python src/validate.py
     deps:
     - path: data/bronze/bronze_data.csv
       hash: md5
-      md5: 0b794d1b2e31b16a3b35eff540d2ac08
-      size: 131330
+      md5: 65908f404add6510afa8e6c3c9aee35b
+      size: 28871
     - path: data/silver/silver_data.csv
       hash: md5
-      md5: 192abb5898b5b1158cd771b532c723b0
-      size: 362604
+      md5: 42918c6f2d5ffe8f2f3de4871f4f7caa
+      size: 78867
     - path: src/validate.py
       hash: md5
       md5: b9af8cfb7c6350c993448c9e9d3983bb
@@ -130,8 +131,8 @@ stages:
     deps:
     - path: data/silver/silver_data.csv
       hash: md5
-      md5: 192abb5898b5b1158cd771b532c723b0
-      size: 362604
+      md5: 42918c6f2d5ffe8f2f3de4871f4f7caa
+      size: 78867
     - path: src/prepare_gold.py
       hash: md5
       md5: 93d7ccd4f3d39a4f07fab6598a66f6d5
@@ -147,5 +148,5 @@ stages:
     outs:
     - path: data/gold/gold_data.csv
       hash: md5
-      md5: a3c4d6a97d02154db729ce1075371e08
-      size: 309151
+      md5: 76bf88d74658b2f3c391f150952ae2c9
+      size: 71008
