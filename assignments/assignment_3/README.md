@@ -71,3 +71,35 @@ dvc repro
 3. **Clean** - Silver layer: data cleaning and feature engineering
 4. **Validate** - Data quality tests
 5. **Prepare Gold** - Gold layer: ML-ready dataset for forecasting
+
+## Execution Steps
+
+### Step 1: Batch Splitting
+
+```bash
+python src/split_batches.py
+```
+
+Loads `data/raw/train.csv`, sorts records by date, and splits them into 5 roughly
+equal time-ordered batches (~293 records each). Each batch covers ~9-10 months of
+climate observations, simulating how data would arrive incrementally over time.
+
+Output: `data/batches/batch_{1..5}.csv`
+
+### Step 2: Bronze Layer Ingestion
+
+```bash
+python src/ingest.py              # ingest all batches
+python src/ingest.py --batch 3    # or ingest a single batch
+```
+
+Each batch goes through a simulated ingestion process that introduces realistic
+data quality issues to mimic real-world data pipelines:
+- **Dropped rows** (~5%) - simulates data loss during transfer
+- **Missing values** (~3%) - simulates sensor failures or incomplete records
+- **Duplicate rows** (~2%) - simulates duplicate event delivery
+
+Metadata columns are added for lineage tracking: `batch_id`, `ingestion_timestamp`,
+and `source_file`. Batches are appended incrementally to the bronze dataset.
+
+Output: `data/bronze/bronze_data.csv`
