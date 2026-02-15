@@ -40,7 +40,7 @@ stages:
         ingest:
           batch_dir: data/batches
           output_file: data/bronze/bronze_data.csv
-          max_batch: 4
+          max_batch: 5
           drop_fraction: 0.05
           missing_fraction: 0.03
           duplicate_fraction: 0.02
@@ -48,15 +48,15 @@ stages:
     outs:
     - path: data/bronze/bronze_data.csv
       hash: md5
-      md5: 439e16de484691b85bd931a653ab010c
-      size: 101893
+      md5: 63da8438c0a0ca1830620216bfa5258c
+      size: 131330
   clean:
     cmd: python src/clean.py
     deps:
     - path: data/bronze/bronze_data.csv
       hash: md5
-      md5: 439e16de484691b85bd931a653ab010c
-      size: 101893
+      md5: 63da8438c0a0ca1830620216bfa5258c
+      size: 131330
     - path: src/clean.py
       hash: md5
       md5: 9cd0a80804cfdf5b1102711b033cca81
@@ -85,19 +85,19 @@ stages:
     outs:
     - path: data/silver/silver_data.csv
       hash: md5
-      md5: dfa892f9a91991333737390cfd495d4b
-      size: 279212
+      md5: 2fbd9ca4d1e467f0311d80d1a22dd196
+      size: 362604
   validate:
     cmd: python src/validate.py
     deps:
     - path: data/bronze/bronze_data.csv
       hash: md5
-      md5: 439e16de484691b85bd931a653ab010c
-      size: 101893
+      md5: 63da8438c0a0ca1830620216bfa5258c
+      size: 131330
     - path: data/silver/silver_data.csv
       hash: md5
-      md5: dfa892f9a91991333737390cfd495d4b
-      size: 279212
+      md5: 2fbd9ca4d1e467f0311d80d1a22dd196
+      size: 362604
     - path: src/validate.py
       hash: md5
       md5: b9af8cfb7c6350c993448c9e9d3983bb
@@ -131,8 +131,8 @@ stages:
     deps:
     - path: data/silver/silver_data.csv
       hash: md5
-      md5: dfa892f9a91991333737390cfd495d4b
-      size: 279212
+      md5: 2fbd9ca4d1e467f0311d80d1a22dd196
+      size: 362604
     - path: src/prepare_gold.py
       hash: md5
       md5: 93d7ccd4f3d39a4f07fab6598a66f6d5
@@ -148,5 +148,5 @@ stages:
     outs:
     - path: data/gold/gold_data.csv
       hash: md5
-      md5: 9e6c325f2102b7f564c206e83fa04874
-      size: 242144
+      md5: a3c4d6a97d02154db729ce1075371e08
+      size: 309151
