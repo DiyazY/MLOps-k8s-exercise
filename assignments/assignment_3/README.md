@@ -134,3 +134,19 @@ Runs 14 automated checks on the silver dataset:
 - Row count consistency between bronze and silver layers
 
 Exits with error code 1 if any check fails.
+
+### Step 5: Gold Layer — ML-Ready Dataset
+
+```bash
+python src/prepare_gold.py
+```
+
+Transforms silver data into a supervised learning dataset for **next-day mean temperature forecasting**:
+- Drops metadata columns (`batch_id`, `ingestion_timestamp`, `source_file`)
+- Creates forecast target: `meantemp` shifted by 1 day
+- One-hot encodes the `season` column
+- Selects features based on correlation with the target (threshold=0.1), dropping low-signal features like `month`, `day_of_year`, and `season_autumn`
+
+Final dataset: 1384 rows, 19 features + target. No model training is performed.
+
+Output: `data/gold/gold_data.csv`
