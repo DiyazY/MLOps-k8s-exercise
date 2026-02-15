@@ -5,13 +5,6 @@ __pycache__/
 *.pyo
 .pytest_cache/
 
-# Data files (tracked by DVC)
-data/raw/
-data/batches/
-data/bronze/
-data/silver/
-data/gold/
-
 # OS
 .DS_Store
 
